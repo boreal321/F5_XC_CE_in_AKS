@@ -51,23 +51,42 @@ export ARM_CLIENT_SECRET="password"
 
 ### Basic Steps for Building AKS Cluster and XC K8s Site
 
+Deploy the AKS cluster:
+
 ```bash
 terrform init -upgrade
 terraform plan -out main.tfplan
 terraform apply main.tfplan
+```
 
-echo "$(terraform output kube_config)" > ./azurek8s (edit azureki8s and remove the EOFs)
+Create the kubeconfig file:
+`echo "$(terraform output kube_config)" > ./azurek8s`
+
+(edit azurek8s and remove the EOFs at the top and bottom of the file)
+`vi azurek8s`
+
+Test your kubeconfig:
+```bash
 kubectl --kubeconfig azurek8s get nodes
-kubectl --kubeconfig azurek8s apply -f azure-vote.yaml
+kubectl --kubeconfig azurek8s get pods --all-namespaces
+```
 
+Time to read the documentation on deploying a CE site in K8s. The basic steps are:
+
+1. Generate a site token.
+1. Download the CE deployment manifest:
+`curl https://gitlab.com/volterra.io/volterra-ce/-/blob/master/k8s/ce_k8s.yml > ce_k8s.yml`
+1. Add the site token to the deployment manifest.
+1. Deploy the CE pods, check the status of the pods and watch the logs:
+
+```bash
+kubectl --kubeconfig azurek8s apply -f ce_k8s.yml
 kubectl --kubeconfig azurek8s get pods -n ves-system -o=wide
 kubectl --kubeconfig azurek8s logs statefulset/vp-manager -n ves-system -f
-
-(Go and accept registrations in XC Console)
-
-kubectl --kubeconfig azurek8s apply -f httpbin.yaml
-
 ```
+
+When you see the that the registrations are waiting for approval in the logs go and accept registrations in XC Console.
+
 
 ### Tools For Testing in the AKS Cluster
 
