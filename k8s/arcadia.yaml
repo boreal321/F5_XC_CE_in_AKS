@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: arcadia
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcadia
+  labels:
+    app: arcadia
+    service: arcadia
+spec:
+  ports:
+  - name: http
+    port: 8888
+    targetPort: 80
+  selector:
+    app: arcadia
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcadia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arcadia
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: arcadia
+        version: v1
+    spec:
+      serviceAccountName: arcadia
+      containers:
+      - image: registry.gitlab.com/arcadia-application/main-app/mainapp:latest
+        imagePullPolicy: IfNotPresent
+        name: arcadia
+        ports:
+        - containerPort: 80

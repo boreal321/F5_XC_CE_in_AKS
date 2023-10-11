@@ -1,0 +1,13 @@
+**/.terraform/*
+**/terraform/.terraform/*
+terraform/.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfplan
+**/*.0
+.vscode/
+**/.DS_Store
+ce_k8s.yaml
+azurek8s
+env_setup/
+k8s/arcadia2.0/

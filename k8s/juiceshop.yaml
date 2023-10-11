@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: juice-shop
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: juice-shop
+  labels:
+    app: juice-shop
+    service: juice-shop
+spec:
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: juice-shop
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: juice-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: juice-shop
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: juice-shop
+        version: v1
+    spec:
+      serviceAccountName: juice-shop
+      containers:
+      - image: bkimminich/juice-shop
+        imagePullPolicy: IfNotPresent
+        name: juice-shop
+        ports:
+        - containerPort: 3000
