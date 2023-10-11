@@ -1,6 +1,22 @@
 # XC Site in AKS Demo
 
+## Reading Material
+
+The Terraform plan to deploy an AKS cluster is from [this quickstart guide](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-terraform?tabs=bash%2Cazure-cli).
+
+Steps for deploying a CE in a Kubernetes cluster (eg AKS) can be found [here](https://docs.cloud.f5.com/docs/how-to/site-management/create-k8s-site).
+
+The following devcentral articles were helpful:
+
+[Kubernetes architecture options with F5 Distributed Cloud Services](https://community.f5.com/t5/technical-articles/kubernetes-architecture-options-with-f5-distributed-cloud/ta-p/306550)
+
+[Securely connecting Kubernetes Microservices with F5 Distributed Cloud](https://community.f5.com/t5/technical-articles/securely-connecting-kubernetes-microservices-with-f5-distributed/ta-p/306100)
+
 ## Azure Stuff
+
+You will need the Azure CLI tool `az`. Install it with brew if you're on MacOS:
+
+`brew install azure-cli`
 
 Get your subscription ID:
 
@@ -53,24 +69,23 @@ kubectl --kubeconfig azurek8s apply -f httpbin.yaml
 
 ```
 
-### Stuff For Testing in the AKS Cluster
+### Tools For Testing in the AKS Cluster
 
+A handy busybox pod for curl, ping, etc.
 ```bash
 kubectl --kubeconfig azurek8s run --rm -it busybox --image radial/busyboxplus:curl /bin/sh
 ```
 
 ### Start and Stop the AKS Cluster
 
-Get the cluster name and resource group:
-
+Get the AKS cluster name and resource group:
 `terraform output`
 
+Stop your AKS cluster (save energy):
+`az aks stop --name cluster-saved-goblin -g rg-smiling-mite`
 
-```bash
-az aks list
+Start your AKS cluster:
+`az aks start --name cluster-saved-goblin -g rg-smiling-mite`
 
-az aks stop --name cluster-saved-goblin -g rg-smiling-mite
-az aks start --name cluster-saved-goblin -g rg-smiling-mite
-
-az aks show --name cluster-saved-goblin -g rg-smiling-mite|jq '.agentPoolProfiles[]|.powerState'
-```
+Check the status of your AKS cluster:
+`az aks show --name cluster-saved-goblin -g rg-smiling-mite|jq '.agentPoolProfiles[]|.powerState'`
