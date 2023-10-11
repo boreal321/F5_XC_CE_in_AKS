@@ -2,9 +2,13 @@
 
 ## Azure Stuff
 
+Get your subscription ID:
+
+`az account show|jq '.id'`
+
 Create a service account for terraform:
 
-`az ad sp create-for-rbac --name your_sp_name --role Contributor --scopes /subscriptions/your_sub`
+`az ad sp create-for-rbac --name your_sp_name --role Contributor --scopes /subscriptions/your_sub_id`
 
 Output should looks something like:
 
@@ -16,6 +20,15 @@ Output should looks something like:
   "tenant": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
 
+```
+
+Using the values above, export the environment variables for terraform to use for auth-n/z:
+
+```bash
+export ARM_SUBSCRIPTION_ID="your_sub_id"
+export ARM_TENANT_ID="tenant"
+export ARM_CLIENT_ID="appid"
+export ARM_CLIENT_SECRET="password"
 ```
 
 ## Terraform and Kubectl Stuff
