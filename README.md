@@ -76,8 +76,8 @@ Time to read the documentation on deploying a CE site in K8s. The basic steps ar
 1. Generate a site token.
 1. Download the CE deployment manifest:
 `curl https://gitlab.com/volterra.io/volterra-ce/-/blob/master/k8s/ce_k8s.yml > ce_k8s.yml`
-1. Add the site token to the deployment manifest.
-1. Deploy the CE pods, check the status of the pods and watch the logs:
+1. Edit the deployment manifest and update the site token, longitude, latitude and cluster name config parameters.
+1. Deploy the CE pods, check the status of the pods and then watch the logs to ensure the deployment was successful:
 
 ```bash
 kubectl --kubeconfig azurek8s apply -f ce_k8s.yml
