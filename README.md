@@ -60,10 +60,14 @@ terraform apply main.tfplan
 ```
 
 Create the kubeconfig file:
-`echo "$(terraform output kube_config)" > ./azurek8s`
+```bash
+echo "$(terraform output kube_config)" > ./azurek8s
+```
 
 (edit azurek8s and remove the EOFs at the top and bottom of the file)
-`vi azurek8s`
+```bash
+vi azurek8s
+```
 
 Test your kubeconfig:
 ```bash
@@ -75,7 +79,9 @@ Time to read the documentation on deploying a CE site in K8s. The basic steps ar
 
 1. Generate a site token.
 1. Download the CE deployment manifest:
-`curl https://gitlab.com/volterra.io/volterra-ce/-/blob/master/k8s/ce_k8s.yml > ce_k8s.yml`
+```bash
+curl https://gitlab.com/volterra.io/volterra-ce/-/blob/master/k8s/ce_k8s.yml > ce_k8s.yml
+```
 1. Edit the deployment manifest and update the site token, longitude, latitude and cluster name config parameters.
 1. Deploy the CE pods, check the status of the pods and then watch the logs to ensure the deployment was successful:
 
@@ -98,7 +104,9 @@ kubectl --kubeconfig azurek8s run --rm -it busybox --image radial/busyboxplus:cu
 ### Start and Stop the AKS Cluster
 
 Get the AKS cluster name and resource group:
-```terraform output```
+```bash
+terraform output
+```
 
 Stop your AKS cluster (save energy):
 ```bash
