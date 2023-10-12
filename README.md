@@ -101,10 +101,16 @@ Get the AKS cluster name and resource group:
 ```terraform output```
 
 Stop your AKS cluster (save energy):
-```az aks stop --name cluster-saved-goblin -g rg-smiling-mite```
+```bash
+az aks stop --name cluster-saved-goblin -g rg-smiling-mite
+```
 
 Start your AKS cluster:
-```az aks start --name cluster-saved-goblin -g rg-smiling-mite```
+```bash
+az aks start --name cluster-saved-goblin -g rg-smiling-mite
+```
 
 Check the status of your AKS cluster:
-```az aks show --name cluster-saved-goblin -g rg-smiling-mite|jq '.agentPoolProfiles[]|.powerState'```
+```bash
+az aks show --name cluster-saved-goblin -g rg-smiling-mite|jq '.agentPoolProfiles[]|.powerState'
+```
