@@ -98,13 +98,13 @@ kubectl --kubeconfig azurek8s run --rm -it busybox --image radial/busyboxplus:cu
 ### Start and Stop the AKS Cluster
 
 Get the AKS cluster name and resource group:
-`terraform output`
+```terraform output```
 
 Stop your AKS cluster (save energy):
-`az aks stop --name cluster-saved-goblin -g rg-smiling-mite`
+```az aks stop --name cluster-saved-goblin -g rg-smiling-mite```
 
 Start your AKS cluster:
-`az aks start --name cluster-saved-goblin -g rg-smiling-mite`
+```az aks start --name cluster-saved-goblin -g rg-smiling-mite```
 
 Check the status of your AKS cluster:
-`az aks show --name cluster-saved-goblin -g rg-smiling-mite|jq '.agentPoolProfiles[]|.powerState'`
+```az aks show --name cluster-saved-goblin -g rg-smiling-mite|jq '.agentPoolProfiles[]|.powerState'```
