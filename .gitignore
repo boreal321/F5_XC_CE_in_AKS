@@ -12,4 +12,5 @@ azurek8s
 env_setup/
 k8s/arcadia2.0/
 json-server/
-.*~
+**~
+secrets/
